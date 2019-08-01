@@ -1,4 +1,8 @@
+#-*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #Users class
+#By Bertrick
+
 
 class Users():
 	

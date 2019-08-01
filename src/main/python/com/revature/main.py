@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#By Bertrick
 
 '''
 This is your main script, this should call several other scripts within your packages.
