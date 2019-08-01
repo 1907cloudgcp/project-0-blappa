@@ -3,6 +3,7 @@
 #Register
 #By Bertrick
 
+import logging
 
 
 #create users

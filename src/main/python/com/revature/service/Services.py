@@ -1,69 +1,30 @@
-#-*- coding: utf-8 -*-
 #!/usr/bin/env python3
-#Services
 #By Bertrick
 
+'''
+This is your script to get connexion to Data Base.
+'''
 
-from datetime import datetime
-
-
-#check balance user
-def check_balance(self, account):
-
-	return
-
-#withdraw account user
-def withdraw(self, account):
-       
-    return 
-
-#make a deposite into existing account
-def deposit(self, account):
-       
-    return
-
-#find all transactions
-def findAllTransactions(self):
-       
-    return
+import logging
+import mysql.connector
+from mysql.connector import Error
 
 
-#As a computer I can ask for an ip address, using a name or MAC address
-def askIpAddr(self, name, imacAddr):
-       
-    return 
 
-#As a computer I can register ports with my ip address
-def registerPorts(self, ipAddr):
-       
-    return
+class DATAUtilities:
 
-#As a computer I can see all ports registered to me
-def findAllPorts(self):
-       
-    return
 
-#As a computer I can see any traffic sent to me
-def anyTraffic(self, account):
-       
-    return
+	def getConnection(self):
+		try:
+			connection = mysql.connector.connect(host='localhost',database='bank_p0',user='root', password='')
+			if connection.is_connected():
+				db_Info = connection.get_server_info()
+				cursor = connection.cursor()
+				cursor.execute("select database();")
+				record = cursor.fetchone()
+				message = "Connected to MySQL database..."
+		except Error as e :
+				message = "Error while connecting to MySQL" + e
 
-#As an outside device I can send traffic to an address.
-def sendTraffic(self, addr):
-       
-    return
+		return [connection, cursor, message]
 
-#As an outside device I can send traffic to a port.
-def sendTraffic(self, port):
-       
-    return 
-
-#As a router admin I can see all addresses and ports registered to them.
-def findAllAddrAndPorts(self):
-       
-    return
-
-#As a router admin I can change any port registration
-def changeAnyPort(self, port):
-       
-    return

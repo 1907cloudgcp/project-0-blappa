@@ -3,6 +3,7 @@
 #Users class
 #By Bertrick
 
+import logging
 
 class Users():
 	

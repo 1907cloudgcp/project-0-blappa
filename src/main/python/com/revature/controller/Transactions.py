@@ -3,6 +3,8 @@
 #Transactions
 #By Bertrick
 
+import logging
+
 
 class Transactions():
     
