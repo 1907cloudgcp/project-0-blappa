@@ -5,12 +5,13 @@
 
 import logging
 
-class Users():
+class Users:
 	
-    def __init__(self, name, email, number, login, pswd, status):
+    def __init__(self, name, email, phnumber, birth_date, username, pswd, status):
       self.name = name
       self.email = email
-      self.number = number
-      self.login = login
+      self.phnumber = phnumber
+      self.birth_date = birth_date
+      self.username = username
       self.pswd = pswd
       self.status = status
