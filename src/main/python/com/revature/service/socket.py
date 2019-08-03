@@ -11,7 +11,7 @@ import re, uuid
 # get IP address and port
 def get_IPADDR():
 
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     s.connect(("msn.com",80))
 
@@ -30,6 +30,6 @@ def get_MACADDR(interface, p=0):
 
 
 def get_PORTS():
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	sock.bind(('0.0.0.0', 0))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(('0.0.0.0', 0))
     return sock.getsockname()[1]
