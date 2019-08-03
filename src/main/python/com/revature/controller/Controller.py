@@ -5,8 +5,8 @@
 
 import logging
 from service import Register
-from controller import Users, Accounts, Transactions
-
+from controller import Users, Accounts, Transactions, Roles
+from datetime import date
 
 
 class Functionalities:
@@ -21,22 +21,31 @@ class Functionalities:
         ->> For view your balance, press 2.\n
         ->> For withdraw money, press 3.\n
         ->> To make deposit money, press 4. \n
-        ->> To view all my past transactions, press 5
+        ->> To view all my past transactions, press 5.\n
         ->> For logout, press 6. \n
         '''
 
         choice = int(input(menu))
 
         if choice == 1:
-            print("Please, complete information below : \n")
+
+            print("Please, complete information below : \n-- User registering : ")  
+          
             name = raw_input("Name : ")
             email = raw_input("Email : ")
             phnumber = raw_input("Phone Number : ")
             birth_date = raw_input("Birth Date : ")
             username = raw_input("Login : ")
             pswd = raw_input("Password : ")
-            status = int(input("Status (enable 1 or deseable 0) "))
-            user = Users(name, email, phnumber, birth_date, username, pswd, status)
+            createdAt = str(date. today())
+            updatedAt =  str(date. today())
+            roles_users_isbn_13 = raw_input("Role ID : ")
+            enabled = int(input("Status (enable 1 or deseable 0) "))
+            
+            #create default role
+            roles = Roles('Create_Modifier', 'Default', createdAt, updatedAt, '1')
+           
+            user = Users(name, email, phnumber, birth_date, username, pswd, createdAt, updatedAt, enabled)
                          
             result = Register.Init().create(user, connection, cursor)
             if result:

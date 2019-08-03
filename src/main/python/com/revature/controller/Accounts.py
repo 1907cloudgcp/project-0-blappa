@@ -7,8 +7,18 @@ import logging
 
 class Accounts:
 
-    def __init__(self, acc_number, balance, creation_date, status):
-      self.acc_number = acc_number
-      self.balance = balance
-      self.creation_date = creation_date
-      self.status = status
+    def __init__(self, account_name, account_num, typeA, description, createdAt, updatedAt, enabled):
+
+		self.account_name = account_name
+
+		self.account_num  = account_num
+
+		self.typeA        = typeA
+
+		self.description  = description
+
+		self.createdAt    = createdAt
+
+		self.updatedAt    = updatedAt
+
+		self.enabled      = enabled

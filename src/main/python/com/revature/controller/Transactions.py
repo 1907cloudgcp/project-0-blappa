@@ -8,9 +8,22 @@ import logging
 
 class Transactions:
     
-    def __init__(self, acc_number, balance, typeTrs, creation_date, status):
-    	self.acc_number = acc_number
-        self.balance = balance
-        self.typeTrs = typeTrs
-        self.creation_date = creation_date
-        self.status = status
+    def __init__(self, name, description, typeTrs, creation_date, startDate, endDate, createdAt, updatedAt, enabled):
+
+		   self.name          = name
+
+		   self.description   = description
+
+		   self.typeTrs       = typeTrs
+
+		   self.creation_date = creation_date
+
+		   self.startDate     = startDate
+
+		   self.endDate       = endDate
+
+		   self.createdAt     = createdAt
+
+		   self.updatedAt     = updatedAt
+
+		   self.enabled       = enabled
