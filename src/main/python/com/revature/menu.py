@@ -22,13 +22,6 @@ def show_menu(connection, cursor):
     ->> For view all roles, press 9.
     ->> For view all users, press 10.
     ->> For view all accounts, press 11.
-    ->> To ask for an ip address, press 12.
-    ->> To register ports with my ip address, press 13.
-    ->> To see all ports registered to me, press 14.
-    ->> As outside divice, To see any traffic sent to me, press 15.
-    ->> As outside divice, To send traffic to an address, press 16.
-    ->> As a router admin, To see all addresses and ports registered to them, press 17.
-    ->> As a router admin, To change any port registration, press 18.
   \n->> For logout, press 0. \n
     '''
 
