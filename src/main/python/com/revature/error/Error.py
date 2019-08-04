@@ -5,8 +5,8 @@
 
 
 class MyError(Exception):
-    def __init__(self, message, animal):
+    def __init__(self, message):
         self.message = message
-        self.animal = animal
+  
     def __str__(self):
         return self.message
