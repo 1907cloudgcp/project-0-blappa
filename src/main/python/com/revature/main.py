@@ -2,18 +2,19 @@
 #By Bertrick
 
 import logging
-from service import Services
-from controller import Controller
+import menu
+from controller import ControllerUsers
+from utility import Drivers, Socket
 
 '''
 This is your main script, this should call several other scripts within your packages.
 '''
 
-def run_app(connection, cursor, functions):
+def run_app(connection, cursor):
 
 	    message = '''
-		----- WELCOME TO BANK P0 -------- \n 
-		Please, enter parameters of connection 
+		------->>> WELCOME TO BANK PROJET 0 \n
+		Please, enter your login and password to connect 
 		'''
 
             print(message)
@@ -22,29 +23,34 @@ def run_app(connection, cursor, functions):
             username = raw_input("Login : ")
 	    pswd  = raw_input("Password : ")
 	    
-	    #check user
-	    if(functions.login(username, pswd, connection, cursor)):
-	        functions.show_menu(connection, cursor)
-	    else:
+	    #check and connect user
+            controllerUser = ControllerUsers.Functionalities()
+	    if(controllerUser.login(username, pswd, connection, cursor)):
+               result = 1
+               while result == 1:
+	           menu.show_menu(connection, cursor)
+                   result = input("Press 1 to continue Or 0 to exit \n")
+
+	       print("\n----- GoodBye !!\n")
+
+            else:
 	        print("\nUsername or Password incorect, \nPlease try again later!\n")
 
 
 
 def main():
 
-	#get connection to database
-        utilities = Services.DATAUtilities()
-	con = utilities.getConnection()
+        #get driver mysql conection
+        mysql = Drivers.DATAMySQL()
+	
+        #get connection to mysql database
+        con = mysql.getConnection()
         
         connection = con[0]        
         cursor = con[1]
-        
-        #get all functionalities
-        functions = Controller.Functionalities()
 
-        run_app(connection, cursor, functions)
+        run_app(connection, cursor)
         
-        #close connection database
         connection.close()
 
 
