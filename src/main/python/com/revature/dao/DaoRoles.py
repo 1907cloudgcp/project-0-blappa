@@ -6,7 +6,7 @@
 import logging
 import mysql.connector
 from mysql.connector import Error
-from dao import DaoRoles
+
 
 class Init:
   
@@ -31,7 +31,10 @@ class Init:
 
 	def getId(self, id, connection, cursor): 
 
-	    role_id = DaoRoles.Init().getId(id, connection, cursor)
+            query = """ SELECT id FROM roles AS r WHERE r.id= '%s' """ % (id)
 
-            return role_id
+	    cursor.execute(query)
 
+	    isbn_13 = cursor.fetchall()
+
+            return isbn_13[0][0]

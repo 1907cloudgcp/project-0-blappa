@@ -7,24 +7,15 @@ import logging
 from entity import Accounts, Transactions
 import mysql.connector
 from mysql.connector import Error
-
+from dao import DaoAccounts
 
 class Init:
   
 	#create accounts
 	def create(self, account, connection, cursor):
-	    try:   
-		 sql_insert_query = """ INSERT INTO accounts (isbn_13, account_name, account_num, balance, typeA, description, createdAt, updatedAt,users_accounts_id, enabled) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
-		 insert_tuple = ("000"+account.account_name, account.account_name, account.account_num, account.balance, account.typeA, account.description, account.createdAt, account.updatedAt, account.user_id, account.enabled)
-	         result  = cursor.execute(sql_insert_query, insert_tuple)
- 
-                 connection.commit()
-                 return True
+            return DaoAccounts.Init().create(account, connection, cursor)
 
-            except mysql.connector.Error as error :
-                 connection.rollback()
-	         return False
 
 	#update accounts
 	def update(self, iduser, connection, cursor):
@@ -40,52 +31,24 @@ class Init:
 
 
 	def deposit(self, users_id, account, balance, description, createdAt, updatedAt, connection, cursor):
-        
-             balance = str(float(account[4]) + balance)
-        
-             sql_update_query = """UPDATE accounts AS a SET a.balance = '%s' WHERE a.id = '%s' """ % (balance, account[0])
 
-             cursor.execute(sql_update_query)
-
-             connection.commit()
-
-             return True
+             return DaoAccounts.Init().deposit(users_id, account, balance, description, createdAt, updatedAt, connection, cursor)
 
 
         def withdraw(self, users_id, account, balance, description, createdAt, updatedAt, connection, cursor):
         
-             balance = str(float(account[4]) - balance)
-        
-             sql_update_query = """UPDATE accounts AS a SET a.balance = '%s' WHERE a.id = '%s' """ % (balance, account[0])
-
-             cursor.execute(sql_update_query)
-
-             connection.commit()
-
-             return True
+             return DaoAccounts.Init().withdraw(users_id, account, balance, description, createdAt, updatedAt, connection, cursor)
 
     
 
         def getId(self, id, connection, cursor): 
 
-             query = """ SELECT id FROM accounts AS a WHERE a.id= '%s' """ % (id)
-
-	     cursor.execute(query)
-
-             isbn_13 = cursor.fetchall()
-
-	     return isbn_13[0][0]
+	     return  DaoAccounts.Init().getId(id, connection, cursor)
 
 
 
         def getAccount(self, account_num, connection, cursor):
 
-             query = """ SELECT * FROM accounts AS a WHERE a.account_num= '%s' """ % (account_num)
-
-	     cursor.execute(query)
-
-	     isbn_13 = cursor.fetchall()
-
-	     return isbn_13[0]
+	     return DaoAccounts.Init().getAccount(account_num, connection, cursor)
 
 

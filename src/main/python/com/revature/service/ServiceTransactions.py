@@ -6,7 +6,7 @@
 import logging
 import mysql.connector
 from mysql.connector import Error
-
+from dao import DaoTransactions
 
 class Init:
   
@@ -14,18 +14,8 @@ class Init:
     
 	#create transactions
 	def save(self, transaction, connection, cursor):
-	    try:   
-		sql_insert_query = """ INSERT INTO transactions (isbn_13, name, description, typeTrs, startDate, endDate, createdAt, updatedAt, accounts_transactions_id, enabled) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-
-		insert_tuple = ("000"+transaction.name, transaction.name, transaction.description, transaction.typeTrs, transaction.startDate, transaction.endDate, transaction.createdAt, transaction.updatedAt, transaction.account_id, transaction.enabled)
-	        result  = cursor.execute(sql_insert_query, insert_tuple)
- 
-                connection.commit()
-                return True
-
-            except mysql.connector.Error as error :
-                connection.rollback()
-	        return False
+	   
+            return DaoTransactions.Init().save(transaction, connection, cursor)
 
 
 	#update transactions
@@ -40,38 +30,19 @@ class Init:
 	    return 
 
 
-	def getId(self, id, connection, cursor): 
+	def getId(self, id, connection, cursor):
 
-		query = """ SELECT id FROM transactions AS t WHERE t.id= '%s' """ % (id)
-
-	        cursor.execute(query)
-
-		isbn_13 = cursor.fetchall()
-
-		return isbn_13[0][0]
+	    return DaoTransactions.Init().getId(id, connection, cursor)
 
 
         #get all transaction about specific account bank 
         def getAllPassTrs(self, account_id, connection, cursor):
-
-                query = """ SELECT * FROM transactions AS t WHERE t.accounts_transactions_id= '%s' """ % (account_id)
-
-                cursor.execute(query)
-
-                alls = cursor.fetchall()
-
-                return alls
+            
+             return DaoTransactions.Init().getAllPassTrs(account_id, connection, cursor)
 
 
         #get all  transactions
         def getAllTrs(self, connection, cursor):
-
-                query = """ SELECT * FROM transactions"""
-
-                cursor.execute(query)
-
-                alls = cursor.fetchall()
-
-                return alls
-
-
+                
+             return DaoTransactions.Init().getAllTrs(connection, cursor)
+                

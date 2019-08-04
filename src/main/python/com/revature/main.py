@@ -4,7 +4,8 @@
 import logging
 import menu
 from controller import ControllerUsers
-from utility import Drivers, Socket
+from tool import Drivers, Socket
+
 
 '''
 This is your main script, this should call several other scripts within your packages.
@@ -35,7 +36,9 @@ def run_app(connection, cursor):
 
             else:
 	        print("\nUsername or Password incorect, \nPlease try again later!\n")
-
+               
+            #close connection to database
+            controllerUser.logout(connection, cursor)  
 
 
 def main():
@@ -50,8 +53,6 @@ def main():
         cursor = con[1]
 
         run_app(connection, cursor)
-        
-        connection.close()
 
 
 if __name__ == '__main__':
