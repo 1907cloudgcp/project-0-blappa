@@ -5,8 +5,6 @@
 
 import logging
 from entity import Accounts, Transactions
-import mysql.connector
-from mysql.connector import Error
 from dao import DaoAccounts
 
 class Init:

@@ -5,8 +5,6 @@
 
 import logging
 from entity import Users
-import mysql.connector
-from mysql.connector import Error
 from dao import DaoUsers
 
 

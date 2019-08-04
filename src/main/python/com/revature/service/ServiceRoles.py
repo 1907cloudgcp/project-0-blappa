@@ -4,8 +4,6 @@
 #By Bertrick
 
 import logging
-import mysql.connector
-from mysql.connector import Error
 from dao import DaoRoles
 
 class Init:
