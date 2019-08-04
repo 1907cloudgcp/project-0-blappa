@@ -68,5 +68,5 @@ class Init:
 	#logout user
 	def logout(self, connection, cursor):
 
-	    return 
+	    connection.close() 
 

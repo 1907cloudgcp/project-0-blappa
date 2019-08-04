@@ -44,7 +44,7 @@ class Functionalities:
     #logout controller
     def logout(self, connection, cursor):
 
-        return 
+        ServiceUsers.Init().logout(connection, cursor)
 
     
 

@@ -45,5 +45,5 @@ class Init:
 	#logout user
 	def logout(self, connection, cursor):
                   
-	    connection.close() 
+	    DaoUsers.Init().logout(connection, cursor)  
 

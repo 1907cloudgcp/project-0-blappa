@@ -9,18 +9,27 @@ from controller import ControllerRoles, ControllerUsers, ControllerAccounts, Con
 def show_menu(connection, cursor):
     
     menu ='''
-    ->> For register, press 1. \n
-    ->> For create account, press 2.\n
-    ->> To make deposit money, press 3. \n
-    ->> For withdraw money, press 4.\n
-    ->> For view your balance, press 5.\n
-    ->> For view my bank account, press 6.\n
-    ->> For view all my past transactions, press 7.\n
-    ->> For view all transaction, press 8.\n
-    ->> For view all roles, press 9.\n
-    ->> For view all users, press 10.\n
-    ->> For view all accounts, press 11.\n
-    ->> For logout, press 0. \n
+    Main menu: 
+    -----------------------------------------------------------
+    ->> For register, press 1. 
+    ->> For create account, press 2.
+    ->> To make deposit money, press 3.
+    ->> For withdraw money, press 4.
+    ->> For view your balance, press 5.
+    ->> For view my bank account, press 6.
+    ->> For view all my past transactions, press 7.
+    ->> For view all transaction, press 8.
+    ->> For view all roles, press 9.
+    ->> For view all users, press 10.
+    ->> For view all accounts, press 11.
+    ->> To ask for an ip address, press 12.
+    ->> To register ports with my ip address, press 13.
+    ->> To see all ports registered to me, press 14.
+    ->> As outside divice, To see any traffic sent to me, press 15.
+    ->> As outside divice, To send traffic to an address, press 16.
+    ->> As a router admin, To see all addresses and ports registered to them, press 17.
+    ->> As a router admin, To change any port registration, press 18.
+  \n->> For logout, press 0. \n
     '''
 
     choice = int(input(menu))
