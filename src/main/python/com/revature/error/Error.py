@@ -4,7 +4,8 @@
 #By Bertrick
 
 
-class MyError(Exception):
+class Error(Exception):
+
     def __init__(self, message):
         self.message = message
   

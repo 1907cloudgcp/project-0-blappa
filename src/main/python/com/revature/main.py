@@ -3,7 +3,7 @@
 
 import logging
 import menu
-from controller import ControllerUsers
+from controller import UsersController
 from tool import Drivers, Socket
 
 
@@ -12,6 +12,12 @@ This is your main script, this should call several other scripts within your pac
 '''
 
 def run_app(connection, cursor):
+          
+            logging.basicConfig(filename='../../../resources/app.log',
+                            filemode='a',
+                            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                            datefmt='%H:%M:%S',
+                            level=logging.DEBUG)
 
 	    message = '''
 		------->>> WELCOME TO BANK PROJET 0 \n
@@ -25,8 +31,9 @@ def run_app(connection, cursor):
 	    pswd  = raw_input("Password : ")
 	    
 	    #check and connect user
-            controllerUser = ControllerUsers.Functionalities()
-	    if(controllerUser.login(username, pswd, connection, cursor)):
+            userController = UsersController.Functionalities()
+	    if(userController.login(username, pswd, connection, cursor)):
+               logging.info('User %s login successuful' , username)
                result = 1
                while result == 1:
 	           menu.show_menu(connection, cursor)
@@ -36,9 +43,10 @@ def run_app(connection, cursor):
 
             else:
 	        print("\nUsername or Password incorect, \nPlease try again later!\n")
-               
+                logging.warning('Username or Password incorect, \nPlease try again later!')                
+ 
             #close connection to database
-            controllerUser.logout(connection, cursor)  
+            userController.logout(connection, cursor)  
 
 
 def main():

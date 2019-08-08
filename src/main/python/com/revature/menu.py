@@ -3,11 +3,19 @@
 #menu App
 #By Bertrick
 
-from controller import ControllerRoles, ControllerUsers, ControllerAccounts, ControllerTransactions
+import logging
+from controller import RolesController, UsersController, AccountsController, TransactionsController
+from error import Error
 
 #welcome function
 def show_menu(connection, cursor):
-    
+
+    logging.basicConfig(filename='../../../resources/app.log',
+                            filemode='a',
+                            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                            datefmt='%H:%M:%S',
+                            level=logging.DEBUG)   
+
     menu ='''
     Main menu: 
     -----------------------------------------------------------
@@ -29,131 +37,131 @@ def show_menu(connection, cursor):
     
     #users registering
     if choice == 1:
-
-        print("Please, complete information below : \n-- User registering : ")  
+        try:
+           print("Please, complete information below : \n-- User registering : ")  
         
-         #get all user controller
-        controllerUsers = ControllerUsers.Functionalities()
-        result = controllerUsers.save(connection, cursor)
+           #get all user controller
+           usersController = UsersController.Functionalities()
+           result = usersController.save(connection, cursor)
 
-        if result:
            print("\nUser saved successfully !\n")
-        else:
-           print("\nRegistering failure! \n")
+           logging.info('save user successfully')
+
+        except Error as e:
+             raise Error("Registering failure!")
+             print(e.value)
+             logging.error('e.value')
 
     #registering an account
     if choice == 2:
-     	print("Please, complete information below : \n-- Account registering : ")  
+         try:     
+	    print("Please, complete information below : \n-- Account registering : ")  
         
-        #get all account controller
-        controllerAccounts = ControllerAccounts.Functionalities()
-        result = controllerAccounts.save(connection, cursor)
-        
-        if result:
-           print("\nAccount saved successfully !\n")
-        else:
-           print("\nRegistering failure! \n")
+            #get all account controller
+            accountsController = AccountsController.Functionalities()
+            result = accountsController.save(connection, cursor)
+
+            print("\nAccount saved successfully !\n")
+            logging.info('account user save successfully')
+
+         except Error as e:
+            raise Error("Registering failure!")
+            print(e.value)      
+
 
     #deposit into account bank
     if choice == 3:
-
-        print("Please, complete information below : \n-- Make a deposit into account : ")  
+         try:
+             print("Please, complete information below : \n-- Make a deposit into account : ")  
      
-        #get functionnalities from account controller
-        controllerAccounts = ControllerAccounts.Functionalities()
-        result = controllerAccounts.deposit(connection, cursor)
+             #get functionnalities from account controller
+             accountsController = AccountsController.Functionalities()
+             result = accountsController.deposit(connection, cursor)
                      
-        if result:
-           print ("\nDeposit made successfully ")
-        else:
-           print("\nRegistering failure! \n")
+             print("\ndeposit made successfully !\n")
+             logging.info('deposit made successfully')
+
+         except Error as e:
+             raise Error("Registering failure!")
+             print(e.value)
      
     #withdraw into account
     if choice == 4:
-
-        print("Please, complete information below : \n-- Withdraw into account : ")  
+           try:
+              print("Please, complete information below : \n-- Withdraw into account : ")  
      
         
-        controllerAccounts = ControllerAccounts.Functionalities()
-        result = controllerAccounts.withdraw(connection, cursor)
+              accountsController = AccountsController.Functionalities()
+              result = accountsController.withdraw(connection, cursor)
                      
-        if result:
-           print ("\nWithdraw made successfully ")
-        else:
-           print("\nRegistering failure! \n")
+              print("\nWithdraw made successfully !\n")
+              logging.info('withdraw made successfully')
+
+           except Error as e:
+              raise Error("Registering failure!")
+              print(e.value)
     
 
     #print my balance
     if choice == 5:
-       acc_num = raw_input("Please, enter the account number : ")
+           try: 
+              acc_num = raw_input("Please, enter the account number : ")
 
-       controllerAccounts = ControllerAccounts.Functionalities()
-       result = controllerAccounts.viewBalance(acc_num, connection, cursor)
+              accountsController = AccountsController.Functionalities()
+              result = accountsController.viewBalance(acc_num, connection, cursor)
 
-       if result:
-           print ("\nPlease, follow your balance : "+result)
-           print("\n")
+              print ("\nPlease, follow your balance : "+result)
+              print("\n")
 
-       else:
-           print("\nAccount number not found!\n Please check and try again later! \n")
-    
+           except Error as e:
+              raise Error("Account number not found!\n Please check and try again later!!")
+              print(e.value)
   
     #print my account bank informations
     if choice == 6:
-       acc_num =  raw_input("Please, enter the account number : ")
+           try:
+              acc_num =  raw_input("Please, enter the account number : ")
 
-       controllerAccounts = ControllerAccounts.Functionalities()
-       result = controllerAccounts.view(acc_num, connection, cursor)
+              accountsController = AccountsController.Functionalities()
+              result = accountsController.view(acc_num, connection, cursor)
 
-       if result:
-           print ("\nPlease, below your account bank informations ")
+              print ("\nPlease, below your account bank informations ")
 
-           controllerAccounts.printA(result, connection, cursor)
+              accountsController.printA(result, connection, cursor)
 
-       else:
-           print("\nAccount number not found!\n Please check and try again later! \n")
-
+           except Error as e:
+              raise Error("Account number not found!\n Please check and try again later!!")
+              print(e.value)
 
 
     #view all my pass transactions
     if choice == 7:
-        
-        controllerTransactions = ControllerTransactions.Functionalities()
-        account_num = raw_input("Please, enter your account bank number : ")
+           try:
+              transactionsController = TransactionsController.Functionalities()
+              account_num = raw_input("Please, enter your account bank number : ")
        
-        result = controllerTransactions.getAllPassTrs(account_num, connection, cursor)
-
-        if result:
+              result = transactionsController.getAllPassTrs(account_num, connection, cursor)
          
-           print ("\nPlease, find below all your pass transactions \n")
+              print ("\nPlease, find below all your pass transactions \n")
          
-           controllerTransactions.printAllTrs(result, connection, cursor)
+              transactionsController.printAllTrs(result, connection, cursor)
 
-        else:
-           print("\nThere no transaction line found!\n Please check and try again later! \n")
+           except Error as e:
+              raise Error("Account number not found!\n Please check and try again later!!")
+              print(e.value)
 
 
     #view all transactions
     if choice == 8:
+            try:
+                transactionsController = TransactionsController.Functionalities()
+                result = transactionsController.getAllTrs(connection, cursor)
 
-        controllerTransactions = ControllerTransactions.Functionalities()
-        result = controllerTransactions.getAllTrs(connection, cursor)
+                print ("\nPlease, below the list of all transactions \n")
 
-        if result:
-           print ("\nPlease, below the list of all transactions \n")
+                transactionsController.printAllTrs(result, connection, cursor)
 
-           controllerTransactions.printAllTrs(result, connection, cursor)
+            except Error as e:
+                raise Error("Account number not found!\n Please check and try again later!!")
+                print(e.value)
 
-        else:
-           print("\nThere no transaction line found!\n Please check and try again later! \n")
-
-
-
-
-
-
-
-
-
-
- 
