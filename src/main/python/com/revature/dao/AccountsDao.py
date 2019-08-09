@@ -25,6 +25,11 @@ class Init:
             except mysql.connector.Error as error :
                  connection.rollback()
 	         return False
+            except Error as e:
+               raise Error("Save account failure in Account dao!")
+               print(e.value)
+               logging.error('e.value')
+
 
 	#update accounts
 	def update(self, iduser, connection, cursor):
@@ -40,30 +45,39 @@ class Init:
 
 
 	def deposit(self, users_id, account, balance, description, createdAt, updatedAt, connection, cursor):
+           try:
+               balance = str(float(account[4]) + balance)
         
-             balance = str(float(account[4]) + balance)
-        
-             sql_update_query = """UPDATE accounts AS a SET a.balance = '%s' WHERE a.id = '%s' """ % (balance, account[0])
+               sql_update_query = """UPDATE accounts AS a SET a.balance = '%s' WHERE a.id = '%s' """ % (balance, account[0])
 
-             cursor.execute(sql_update_query)
+               cursor.execute(sql_update_query)
 
-             connection.commit()
+               connection.commit()
 
-             return True
+               return True
+           except mysql.connector.Error as error :
+                 connection.rollback()
+           except Error as e:
+               raise Error("Deposit failure in Account dao!")
+               print(e.value)
+               logging.error('e.value')
 
 
         def withdraw(self, users_id, account, balance, description, createdAt, updatedAt, connection, cursor):
+            try:
+                 balance = str(float(account[4]) - balance)
         
-             balance = str(float(account[4]) - balance)
-        
-             sql_update_query = """UPDATE accounts AS a SET a.balance = '%s' WHERE a.id = '%s' """ % (balance, account[0])
+                 sql_update_query = """UPDATE accounts AS a SET a.balance = '%s' WHERE a.id = '%s' """ % (balance, account[0])
 
-             cursor.execute(sql_update_query)
+                 cursor.execute(sql_update_query)
 
-             connection.commit()
+                 connection.commit()
 
-             return True
-
+                 return True
+            except Error as e:
+               raise Error("Withdraw failure in Account dao!")
+               print(e.value)
+               logging.error('e.value')
     
 
         def getId(self, id, connection, cursor): 

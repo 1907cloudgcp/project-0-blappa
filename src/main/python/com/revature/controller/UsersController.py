@@ -7,13 +7,14 @@ import logging
 from service import RolesService, UsersService, AccountsService, TransactionsService
 from entity import Roles, Users, Accounts, Transactions
 from datetime import date
+from error import Error
 
 
 class Functionalities:
 
     #save user
     def save(self, connection, cursor):
-
+      try:
         name = raw_input("Name : ")
         email = raw_input("Email : ")
         phnumber = raw_input("Phone Number : ")
@@ -31,20 +32,32 @@ class Functionalities:
         user = Users(name, email, phnumber, birth_date, username, pswd, createdAt, updatedAt, enabled, role_id)
                     
         result = UsersService.Init().create(user, connection, cursor)
-
+      
         return result
+      except:
+            raise Error("Registering User failure in User Controller!")
+            logging.error(Error.value)
 
 
     #login controller
     def login(self, username, pswd, connection, cursor):
-  
-        return UsersService.Init().login(username, pswd, connection, cursor)
- 
+        try:      
+             return UsersService.Init().login(username, pswd, connection, cursor)
+        except Error as e:
+             raise Error("login failure in User controller")
+             #print(e.value)
+             logging.error('e.value')
+
 
     #logout controller
     def logout(self, connection, cursor):
+       try:
+            UsersService.Init().logout(connection, cursor)
+       except Error as e:
+             raise Error("Logout failure in user controller!")
+             print(e.value)
+             logging.error('e.value')
 
-        UsersService.Init().logout(connection, cursor)
 
     
 

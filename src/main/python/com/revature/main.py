@@ -4,7 +4,7 @@
 import logging
 import menu
 from controller import UsersController
-from tool import Drivers, Socket
+from tool import Drivers
 
 
 '''

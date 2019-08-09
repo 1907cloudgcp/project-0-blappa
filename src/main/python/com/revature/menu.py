@@ -47,10 +47,10 @@ def show_menu(connection, cursor):
            print("\nUser saved successfully !\n")
            logging.info('save user successfully')
 
-        except Error as e:
-             raise Error("Registering failure!")
+        except Error:
+             raise Error("Registering user failure!")
              print(e.value)
-             logging.error('e.value')
+             logging.error(e.value)
 
     #registering an account
     if choice == 2:

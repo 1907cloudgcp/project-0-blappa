@@ -26,7 +26,10 @@ class Init:
             except mysql.connector.Error as error :
                  connection.rollback()
 	         return False
-
+            except Error as e:
+             raise Error("Create user failure in Users dao!")
+             print(e.value)
+             logging.error('e.value')
 
 	#update user
 	def update(self, iduser, connection, cursor):
@@ -53,16 +56,20 @@ class Init:
 
 	#login user
 	def login(self, username, pswd,connnection,  cursor):
-	    
-            query = """SELECT username, pswd FROM users AS u WHERE u.username= '%s' AND u.pswd = '%s' """ % (username, pswd)
+	  try:
+              query = """SELECT username, pswd FROM users AS u WHERE u.username= '%s' AND u.pswd = '%s' """ % (username, pswd)
 
-            cursor.execute(query)
+              cursor.execute(query)
 
-	    myresult = cursor.fetchall()
+	      myresult = cursor.fetchall()
             
-	    if myresult[0][0] == username and myresult[0][1] == pswd:
-	    	return True
-	    return False
+	      if myresult[0][0] == username and myresult[0][1] == pswd:
+	           return True
+	      return False
+          except Error as e:
+             raise Error("Login failure in Uses dao!")
+             print(e.value)
+             logging.error('e.value')
 
 
 	#logout user

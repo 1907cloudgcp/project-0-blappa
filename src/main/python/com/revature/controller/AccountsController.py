@@ -7,103 +7,123 @@ import logging
 from service import RolesService, UsersService, AccountsService, TransactionsService
 from entity import Roles, Users, Accounts, Transactions
 from datetime import date
-
+from error import Error
 
 class Functionalities:
 
     #save new account
     def save(self, connection, cursor):
-
-        account_name = raw_input("Account name : ")
-        account_num = raw_input("Account number : ")
-        balance = raw_input("Balance (US): ")
-        typeA = raw_input("Type account : ")
-        description = raw_input("Description : ")
-        createdAt = str(date. today())
-        updatedAt =  str(date. today())
-        users_id =int(raw_input("USER ID : "))
-        enabled = int(input("Status (enable 1 or deseable 0) "))
+       try:
+         account_name = raw_input("Account name : ")
+         account_num = raw_input("Account number : ")
+         balance = raw_input("Balance (US): ")
+         typeA = raw_input("Type account : ")
+         description = raw_input("Description : ")
+         createdAt = str(date. today())
+         updatedAt =  str(date. today())
+         users_id =int(raw_input("USER ID : "))
+         enabled = int(input("Status (enable 1 or deseable 0) "))
         
-        #get user ID
-        user_id = UsersService.Init().getId(users_id, connection, cursor)
-       
-        account = Accounts(account_name, account_num, balance, typeA, description, createdAt, updatedAt, enabled, user_id)
-                     
-        result = AccountsService.Init().create(account, connection, cursor)
+         #get user ID
+         user_id = UsersService.Init().getId(users_id, connection, cursor)
 
-        return result
+         account = Accounts(account_name, account_num, balance, typeA, description, createdAt, updatedAt, enabled, user_id)
+                     
+         result = AccountsService.Init().create(account, connection, cursor)
+
+         return result
+       except Error as e:
+             raise Error("Save account failure in Account controller!")
+             print(e.value)
+             logging.error('e.value')
 
 
     #make a deposite 
     def deposit(self, connection, cursor):
-
-        account_num = raw_input("Account number : ")
-        balance = float(raw_input("Amount : "))
-        typeTrs = raw_input("Type of trsaction: ")
-        description = raw_input("Description : ")
-        createdAt = str(date. today())
-        updatedAt =  str(date. today())
-        users_id = int(raw_input("USER ID : "))
+        try:
+           account_num = raw_input("Account number : ")
+           balance = float(raw_input("Amount : "))
+           typeTrs = raw_input("Type of trsaction: ")
+           description = raw_input("Description : ")
+           createdAt = str(date. today())
+           updatedAt =  str(date. today())
+           users_id = int(raw_input("USER ID : "))
         
-        #get user ID
-        user_id = UsersService.Init().getId(users_id, connection, cursor)
+           #get user ID
+           user_id = UsersService.Init().getId(users_id, connection, cursor)
         
-        #get account
-        account = AccountsService.Init().getAccount(account_num, connection, cursor)
+           #get account
+           account = AccountsService.Init().getAccount(account_num, connection, cursor)
                 
-        #make a deposit
-        result = AccountsService.Init().deposit(users_id, account, balance, description, createdAt, updatedAt, connection, cursor)
-        startDate = createdAt
-        endDate = updatedAt
-        transaction = Transactions(account[1], description, typeTrs, startDate, endDate, createdAt, updatedAt, 1, account[0])
+           #make a deposit
+           result = AccountsService.Init().deposit(users_id, account, balance, description, createdAt, updatedAt, connection, cursor)
+           startDate = createdAt
+           endDate = updatedAt
+           transaction = Transactions(account[1], description, typeTrs, startDate, endDate, createdAt, updatedAt, 1, account[0])
 
-        result = TransactionsService.Init().save(transaction, connection, cursor)
+           result = TransactionsService.Init().save(transaction, connection, cursor)
         
-        return result
+           return result
+        except Error as e:
+           raise Error("Save account failure in Account controller!")
+           print(e.value)
+           logging.error('e.value')
 
 
     #withdraw controller
     def withdraw(self, connection, cursor):
+        try:        
+           account_num = raw_input("Account number : ")
+           balance = float(raw_input("Amount : "))
+           typeTrs = raw_input("Type of trsaction: ")
+           description = raw_input("Description : ")
+           createdAt = str(date. today())
+           updatedAt =  str(date. today())
+           users_id = int(raw_input("USER ID : "))
         
-        account_num = raw_input("Account number : ")
-        balance = float(raw_input("Amount : "))
-        typeTrs = raw_input("Type of trsaction: ")
-        description = raw_input("Description : ")
-        createdAt = str(date. today())
-        updatedAt =  str(date. today())
-        users_id = int(raw_input("USER ID : "))
+           #get user ID
+           users_id = UsersService.Init().getId(users_id, connection, cursor)
         
-        #get user ID
-        users_id = UsersService.Init().getId(users_id, connection, cursor)
+           #get account
+           account = AccountsService.Init().getAccount(account_num, connection, cursor)
         
-        #get account
-        account = AccountsService.Init().getAccount(account_num, connection, cursor)
-        
-        #make a deposit
-        result = AccountsService.Init().withdraw(users_id, account, balance, description, createdAt, updatedAt, connection, cursor)
-        startDate = createdAt
-        endDate = updatedAt
-        transaction = Transactions(account[1], description, typeTrs, startDate, endDate, createdAt, updatedAt, 1, account[0])
+           #make a deposit
+           result = AccountsService.Init().withdraw(users_id, account, balance, description, createdAt, updatedAt, connection, cursor)
+           startDate = createdAt
+           endDate = updatedAt
+           transaction = Transactions(account[1], description, typeTrs, startDate, endDate, createdAt, updatedAt, 1, account[0])
 
-        result = TransactionsService.Init().save(transaction, connection, cursor)
-        
-        return result
+           result = TransactionsService.Init().save(transaction, connection, cursor)
+          
+           return result
+        except Error as e:
+             raise Error("Withdraw failure in Account controller!")
+             print(e.value)
+             logging.error('e.value')
 
 
     def view(self, acc_num, connection, cursor):
-       
-        #get account
-        account = AccountsService.Init().getAccount(acc_num, connection, cursor)
+        try:
+           #get account
+           account = AccountsService.Init().getAccount(acc_num, connection, cursor)
         
-        return account
-
+           return account
+        except Error as e:
+             raise Error("View account failure in Account controller!")
+             print(e.value)
+             logging.error('e.value')
     
     def viewBalance(self, acc_num, connection, cursor):
+        try:
+           #get account
+           account = AccountsService.Init().getAccount(acc_num, connection, cursor)
 
-        #get account
-        account = AccountsService.Init().getAccount(acc_num, connection, cursor)
+           return account[4]
+        except Error as e:
+             raise Error("View account failure in Account controller!")
+             print(e.value)
+             logging.error('e.value')
 
-        return account[4]
 
 
     def  printA(self, account, connection, cursor):

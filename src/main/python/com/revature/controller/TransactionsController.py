@@ -7,7 +7,7 @@ import logging
 from service import RolesService, UsersService, AccountsService, TransactionsService
 from entity import Roles, Users, Accounts, Transactions
 from datetime import date
-
+from error import Error
 
 class Functionalities:
 
