@@ -26,10 +26,11 @@ class Init:
             except mysql.connector.Error as error :
                  connection.rollback()
 	         return False
-            except Error as e:
-             raise Error("Create user failure in Users dao!")
-             print(e.value)
-             logging.error('e.value')
+            except Error:
+
+             print('Create user failure in Users dao!')
+             logging.error('Create user failure in Users dao!')
+
 
 	#update user
 	def update(self, iduser, connection, cursor):
@@ -66,10 +67,10 @@ class Init:
 	      if myresult[0][0] == username and myresult[0][1] == pswd:
 	           return True
 	      return False
-          except Error as e:
-             raise Error("Login failure in Uses dao!")
-             print(e.value)
-             logging.error('e.value')
+          except:
+           
+             print('Login failure in Uses dao!')
+             logging.error('Login failure in Uses dao!')
 
 
 	#logout user
