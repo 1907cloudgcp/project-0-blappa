@@ -136,13 +136,26 @@ class Functionalities:
                 Created date    = {5}
                 Updated date    = {6}
                 Enabled         = {7}
-                ''').format(account[2], account[3],account[4],  account[5], account[6], account[7], account[8], account[9])
-    
-
-                
+                ''').format(account[2], account[3],account[4],  account[5], account[6], account[7], account[8], account[9])                           
 
 
+    #get all accounts
+    def getAllAccounts(self, connection, cursor):
+        return   AccountsService.Init().getAllAccounts(connection, cursor)
 
 
+    def printAllAccounts(self, accounts, connection, cursor):
 
-
+         for account in accounts:
+             print('''
+                Account name    = {0}
+                Account number  = {1}
+                Balance         = {2}
+                Account type    = {3}
+                Description     = {4}
+                Created date    = {5}
+                Updated date    = {6}
+                Enabled         = {7}
+                ''').format(account[2], account[3],account[4],  account[5], account[6], account[7], account[8], account[
+9])
+                         

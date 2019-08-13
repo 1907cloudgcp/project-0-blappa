@@ -10,9 +10,9 @@ class Init:
   
     
 	#save new role
-	def save(self, user, connection, cursor):
+	def save(self, role, connection, cursor):
 	    
-            return
+            return RolesDao.Init().create(role, connection, cursor)
 
 
 	#update roles
@@ -24,7 +24,7 @@ class Init:
 	#delete roles
 	def delete(self, iduser, connection, cursor):
 
-	    return 
+	    return  r
 
 
 	def getId(self, id, connection, cursor): 
@@ -33,3 +33,10 @@ class Init:
 
             return role_id
 
+         
+        def getAllRoles(self, connection, cursor):
+            
+            return RolesDao.Init().getAllRoles(connection, cursor) 
+
+             
+                

@@ -103,3 +103,11 @@ class Init:
 	     return isbn_13[0]
 
 
+        def getAllAccounts(self, connection, cursor):
+
+            query = """ SELECT * FROM accounts"""
+
+            cursor.execute(query)
+
+            return cursor.fetchall()
+

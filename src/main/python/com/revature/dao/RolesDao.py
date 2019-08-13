@@ -12,9 +12,12 @@ class Init:
   
     
 	#save new role
-	def save(self, user, connection, cursor):
-	    
-            return
+	def create(self, role, connection, cursor):
+	    sql_insert_query = """ INSERT INTO roles (isbn_13, name, description, createdAt, updatedAt, enabled) VALUES (%s,%s,%s,%s,%s,%s)"""
+            insert_tuple = ("000"+role.name, role.name, role.description , role.createdAt, role.updatedAt, role.enabled)
+            result  = cursor.execute(sql_insert_query, insert_tuple)
+            connection.commit()
+            return result
 
 
 	#update roles
@@ -38,3 +41,15 @@ class Init:
 	    isbn_13 = cursor.fetchall()
 
             return isbn_13[0][0]
+
+
+        
+        def getAllRoles(self, connection, cursor):
+
+            query = """ SELECT * FROM roles """
+
+            cursor.execute(query)
+
+            return cursor.fetchall()
+
+            

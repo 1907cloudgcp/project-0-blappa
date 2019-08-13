@@ -59,6 +59,20 @@ class Functionalities:
              logging.error('e.value')
 
 
-    
+    #get all users
+    def getAllUsers(self, connection, cursor):
+        return   UsersService.Init().getAllUsers(connection, cursor)
 
-   
+
+    def printAllUsers(self, users, connection, cursor):
+         
+         for user in users:
+            print('''
+                User Name       = {0}
+                Email           = {1}
+                Phone number    = {2}
+                Birth date      = {3}
+                Username        = {4}
+                Created date    = {5}
+                ''').format(user[2], user[3],user[4],  user[5], user[6], user[8])
+

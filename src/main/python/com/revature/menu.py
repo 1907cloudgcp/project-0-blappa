@@ -15,22 +15,25 @@ def show_menu(connection, cursor):
                             format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                             datefmt='%H:%M:%S',
                             level=logging.DEBUG)   
-
+    
     menu ='''
     Main menu: 
     -----------------------------------------------------------
     ->> For register, press 1. 
     ->> For create account, press 2.
-    ->> To make deposit money, press 3.
-    ->> For withdraw money, press 4.
-    ->> For view your balance, press 5.
-    ->> For view my bank account, press 6.
-    ->> For view all my past transactions, press 7.
+    ->> To make deposit, press 3.
+    ->> For withdraw, press 4.
+    ->> For check balance, press 5.
+    ->> For check bank account informations, press 6.
+    ->> For view all past transactions, press 7.
     ->> For view all transaction, press 8.
-    ->> For view all roles, press 9.
+    ->> To create new role, press 9.
     ->> For view all users, press 10.
     ->> For view all accounts, press 11.
-  \n->> For logout, press 0. \n
+    ->> For view all roles, press 12.
+    >>>
+    ->> To leave menu, press 0.
+    >>> \n
     '''
 
     choice = int(input(menu))
@@ -153,15 +156,50 @@ def show_menu(connection, cursor):
 
     #view all transactions
     if choice == 8:
-            try:
-                transactionsController = TransactionsController.Functionalities()
-                result = transactionsController.getAllTrs(connection, cursor)
+          transactionsController = TransactionsController.Functionalities()
+          result = transactionsController.getAllTrs(connection, cursor)
 
-                print ("\nPlease, below the list of all transactions \n")
+          print ("\nPlease, below the list of all transactions \n")
 
-                transactionsController.printAllTrs(result, connection, cursor)
+          transactionsController.printAllTrs(result, connection, cursor)
 
-            except Error as e:
-                raise Error("Account number not found!\n Please check and try again later!!")
-                print(e.value)
+
+    if choice == 9:
+         print("Please, complete form below : \n-- save new role : ")
+         rolesController = RolesController.Functionalities()
+         result =  rolesController.save(connection, cursor)
+
+         print("\nRole saved successfully !\n")
+         logging.info('Role save successfully')
+    
+
+    #view all users
+    if choice == 10:
+          usersController = UsersController.Functionalities()
+          results = usersController.getAllUsers(connection, cursor)
+
+          print ("\nPlease, below the list of all users \n")
+
+          usersController.printAllUsers(results, connection, cursor)
+
+
+    #print all accounts
+    if choice == 11:
+          accountsController = AccountsController.Functionalities()
+          results = accountsController.getAllAccounts(connection, cursor)
+
+          print ("\nPlease, below the list of all accounts \n")
+
+          accountsController.printAllAccounts(results, connection, cursor)
+
+
+        
+    if choice == 12:
+          rolesController = RolesController.Functionalities()
+          results = rolesController.getAllRoles(connection, cursor)
+
+          print ("\nPlease, below the list of all roles \n")
+
+          rolesController.printAllRoles(results, connection, cursor)
+
 

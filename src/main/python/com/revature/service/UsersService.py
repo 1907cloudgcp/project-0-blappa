@@ -47,3 +47,9 @@ class Init:
                   
 	    UsersDao.Init().logout(connection, cursor)  
 
+        #get all users
+        def getAllUsers(self, connection, cursor):
+             return  UsersDao.Init().getAllUsers(connection, cursor)
+
+
+ 

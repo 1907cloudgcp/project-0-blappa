@@ -58,18 +58,18 @@ class Init:
 	#login user
 	def login(self, username, pswd,connnection,  cursor):
 	  try:
-              query = """SELECT username, pswd FROM users AS u WHERE u.username= '%s' AND u.pswd = '%s' """ % (username, pswd)
+              query = """SELECT username, pswd, name FROM users AS u WHERE u.username= '%s' AND u.pswd = '%s' """ % (username, pswd)
 
               cursor.execute(query)
 
 	      myresult = cursor.fetchall()
             
 	      if myresult[0][0] == username and myresult[0][1] == pswd:
-	           return True
+	           return myresult[0][2]
 	      return False
           except:
            
-             print('Login failure in Uses dao!')
+             #print('Login failure in Uses dao!')
              logging.error('Login failure in Uses dao!')
 
 
@@ -77,4 +77,14 @@ class Init:
 	def logout(self, connection, cursor):
 
 	    connection.close() 
+
+         
+        def getAllUsers(self, connection, cursor):
+            
+            query = """ SELECT * FROM users"""
+
+            cursor.execute(query)
+
+            return cursor.fetchall()
+
 

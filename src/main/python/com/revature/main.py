@@ -32,14 +32,22 @@ def run_app(connection, cursor):
 	    
 	    #check and connect user
             userController = UsersController.Functionalities()
-	    if(userController.login(username, pswd, connection, cursor)):
-               logging.info('User %s login successuful' , username)
+  
+            #get current user
+            name = userController.login(username, pswd, connection, cursor)            
+            
+	    if name:
+               #welcome messsage
+               print("\n Hey, welcome %s \n" % (name))
+
+               logging.info('User %s login successuful' , name)
+           
                result = 1
                while result == 1:
 	           menu.show_menu(connection, cursor)
                    result = input("Press 1 to continue Or 0 to exit \n")
 
-	       print("\n----- GoodBye !!\n")
+	       print("\n----- GoodBye %s !!\n" % (name))
 
             else:
 	        print("\nUsername or Password incorect, \nPlease try again later!\n")

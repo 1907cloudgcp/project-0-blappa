@@ -50,3 +50,10 @@ class Init:
 	     return AccountsDao.Init().getAccount(account_num, connection, cursor)
 
 
+        #get all accounts
+        def getAllAccounts(self, connection, cursor):
+             return  AccountsDao.Init().getAllAccounts(connection, cursor)
+
+
+
+
